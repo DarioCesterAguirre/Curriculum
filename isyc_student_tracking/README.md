@@ -1,6 +1,7 @@
 # isyc_student_tracking #
 
 TODO Describe the plugin shortly here.
+![Captura de pantalla de 2023-12-21 13-02-49](https://github.com/DarioCesterAguirre/Moodle/assets/159899715/a1a39b54-1bfd-4532-a8a2-4461898426f0)
 
 TODO Provide more detailed description here.
 
