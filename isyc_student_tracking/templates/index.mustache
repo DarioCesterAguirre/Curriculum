@@ -1,0 +1,126 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more comments.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+<h2>Filters</h2>
+<form class="" action="" method="get">
+        <input type="hidden" name="id" value="{{currentcourseid}}">
+        <input type="hidden" name="page" value="1">
+        <select class="select custom-select mr-2" id="menuid" name="groupid">
+            <option value="0">All groups</option>
+            {{#groups}}
+            <option {{#selected}}selected='selected'{{/selected}}value="{{groupid}}">{{groupname}}</option>
+            {{/groups}}
+        </select>
+        <input type="submit" value="Filter group" class="btn btn-primary" />
+    </div>
+</form>
+<br>
+<form autocomplete="off" action="" method="get" class="mform form-inline simplesearchform">
+    <div class="input-group">
+      <input type="hidden" name="id" value="{{currentcourseid}}">
+      <input type="hidden" name="page" value="1">
+      <input type="text"
+             name="fullname"
+             class="form-control mr-2"
+             placeholder="User fullname"
+             autocomplete="off">
+    </div>
+    <input type="submit" value="Search user" class="btn btn-primary" />
+</form>
+<table class="generaltable" class="generaltable">
+<thead>
+    <tr>
+    <th class="header c0" style="" scope="col">
+    {{^linkdesactivated}}<a href="{{url}}?id={{currentcourseid}}&page={{page}}{{#currentgroupid}}&groupid={{currentgroupid}}{{/currentgroupid}}{{#fullname}}&fullname={{fullname}}{{/fullname}}&orderby=firstname&order={{#orderdata}}{{orderdata}}{{/orderdata}}">{{/linkdesactivated}}Firstname{{^linkdesactivated}}</a>{{/linkdesactivated}}
+    {{#firstname}}
+    {{#iconascending}}<i class="icon fa fa-sort-asc fa-fw iconsort"  title="Ascending" role="img" aria-label="Ascending"></i>{{/iconascending}} 
+    {{#icondescending}}<i class="icon fa fa-sort-desc fa-fw iconsort"  title="Descending" role="img" aria-label="Descending"></i>{{/icondescending}}
+    {{/firstname}}
+    / {{^linkdesactivated}}<a href="{{url}}?id={{currentcourseid}}&page={{page}}{{#currentgroupid}}&groupid={{currentgroupid}}{{/currentgroupid}}{{#fullname}}&fullname={{fullname}}{{/fullname}}&orderby=lastname&order={{#orderdata}}{{{orderdata}}}{{/orderdata}}">{{/linkdesactivated}}Lastname{{^linkdesactivated}}</a>{{/linkdesactivated}}
+    {{#lastname}}
+    {{#iconascending}}<i class="icon fa fa-sort-asc fa-fw iconsort"  title="Ascending" role="img" aria-label="Ascending"></i>{{/iconascending}} 
+    {{#icondescending}}<i class="icon fa fa-sort-desc fa-fw iconsort"  title="Descending" role="img" aria-label="Descending"></i>{{/icondescending}}
+    {{/lastname}}
+    </th>
+    <th class="header c2" style="" scope="col">Course Modules Completed</th>
+    <th class="header c3 lastcol" style="" scope="col">
+    {{^linkdesactivated}}<a href="{{url}}?id={{currentcourseid}}&page={{page}}{{#currentgroupid}}&groupid={{currentgroupid}}{{/currentgroupid}}{{#fullname}}&fullname={{fullname}}{{/fullname}}&orderby=progress&order={{#orderdata}}{{orderdata}}{{/orderdata}}">{{/linkdesactivated}}Progress{{^linkdesactivated}}</a>{{/linkdesactivated}}
+    {{#progress}}
+    {{#iconascending}}<i class="icon fa fa-sort-asc fa-fw iconsort"  title="Ascending" role="img" aria-label="Ascending"></i>{{/iconascending}} 
+    {{#icondescending}}<i class="icon fa fa-sort-desc fa-fw iconsort"  title="Descending" role="img" aria-label="Descending"></i>{{/icondescending}}
+    {{/progress}}
+    </th>
+    <th class="header c4 lastcol" style="" scope="col">Course end date</th>    
+    <th class="header c4 lastcol" style="" scope="col">Final Grade</th>
+    </tr>
+</thead>
+<br/>
+<tbody>
+    {{#users}}
+        <tr class="">
+            <td class="cell c0 lastcol" style="">{{firstname}} {{lastname}}</td>
+            <td class="cell c2" style="">{{count}}/{{activities}}</td>  
+            <td class="cell c3" style="">{{progress}}%</td>
+            <td class="cell c4" style="">{{enddate}}</td>
+            <td class="cell c5" style="">{{finalgrade}}</td>
+    {{/users}} 
+        </tr>
+</tbody>
+</table>
+<nav aria-label="Page" class="pagination pagination-centered justify-content-center">
+    <ul class="mt-1 pagination " data-page-size="100">
+        <li class="page-item" data-page-number={{lastpage}}>
+            <a href="{{url}}?id={{currentcourseid}}&page={{lastpage}}{{#currentgroupid}}&groupid={{currentgroupid}}{{/currentgroupid}}{{#fullname}}&fullname={{fullname}}{{/fullname}}{{#orderby}}&orderby={{orderby}}{{/orderby}}{{#order}}&order={{order}}{{/order}}" class="page-link" style={{#lastpagedesactived}}"display: none;"{{/lastpagedesactived}}>
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous page</span>
+            </a>
+        </li>
+        {{#pages}}
+            <li class="page-item {{#is_active}}active{{/is_active}}" data-page-number={page}>
+                <a href="{{url}}?id={{currentcourseid}}&page={{page}}{{#groupid}}&groupid={{currentgroupid}}{{/groupid}}{{#fullname}}&fullname={{fullname}}{{/fullname}}{{#orderby}}&orderby={{orderby}}{{/orderby}}{{#order}}&order={{order}}{{/order}}" class="page-link">
+                    <span aria-hidden="true">{{page}}</span>
+                </a>
+            </li>
+        {{/pages}}
+        <li class="page-item" data-page-number={{nextpage}}>
+            <a href="{{url}}?id={{currentcourseid}}&page={{nextpage}}{{#currentgroupid}}&groupid={{currentgroupid}}{{/currentgroupid}}{{#fullname}}&fullname={{fullname}}{{/fullname}}{{#orderby}}&orderby={{orderby}}{{/orderby}}{{#order}}&order={{order}}{{/order}}" class="page-link" style={{#nextpagedesactived}}"display: none;"{{/nextpagedesactived}}>
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next page</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+{{#csvlink}}
+<table class="generaltable">
+    <tr>
+        <td class="c0"><h4>Download data in this page</h4></td>
+        <td class="c1"><h4>Download all data</h4></td>
+    </tr>
+    <tr>
+        <td>
+            <a href="{{csvlink}}&page={{page}}&elements={{elements}}" class="btn btn-secondary">CSV</a>
+            <a href="{{excellink}}&page={{page}}&elements={{elements}}" class="btn btn-secondary">Excel</a>
+        </td>
+        <td>
+            <a href="{{csvlink}}" class="btn btn-secondary">CSV</a>
+            <a href="{{excellink}}" class="btn btn-secondary">Excel</a>
+        </td>
+    </tr>
+</table>
+{{/csvlink}}
+{{#message}}
+    <p>{{message}}</p>
+{{/message}} 
